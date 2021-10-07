@@ -43,12 +43,11 @@ Il aura également besoin d'une carte mère et d'un BIOS prenant en charge l'uti
 
 ## Systèmes d'exploitation pris en charge : Ubuntu 18.04 et 20.04
 
-Vous devrez pouvoir démarrer votre ordinateur dans une version prise en charge d'Ubuntu pour la mienne. Les versions supérieures à 18.04 et 20.04 devraient fonctionner, mais ne sont pas garanties.
+Vous devrez pouvoir démarrer votre ordinateur dans une version prise en charge d'Ubuntu pour miner. Les versions supérieures à 18.04 et 20.04 devraient fonctionner, mais ne sont pas garanties.
 
 [Installation d'Ubuntu Desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
 
 ### Les références
 
-1. [Qu'est-ce qu'un environnement d'exécution sécurisé (TEE) ?
-](https://www.trustonic.com/technical-articles/what-is-a-trusted-execution-environment-tee/)
-2. [Qu'est-ce qu'Intel SGX](https://software.intel.com/content/www/us/en/develop/topics/software-guard
+1. [Qu'est-ce qu'un environnement d'exécution sécurisé (TEE) ?](https://www.trustonic.com/technical-articles/what-is-a-trusted-execution-environment-tee/)
+2. [Qu'est-ce qu'Intel SGX](https://software.intel.com/content/www/us/en/develop/topics/software-guard) 
