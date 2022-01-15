@@ -29,11 +29,36 @@ It's required to have at least 4 cores (or the compilation can take forever) and
 
 Follow the commands below to prepare the environment. Some can be skipped if already installed.
 
+Instructions for (but not limited to) a relatively clean Windows11/WSL2 environment (Ubuntu 20.04LTS, and git correctly installed) are preceded by the mention "For WSL2"
+
+* Install WSL2 (Windows 10 version 2004 and higher (Build 19041 and higher) or Windows 11)
+
+    More infos at: https://docs.microsoft.com/en-us/windows/wsl/install
+
+    in PowerShell or Windows Command Prompt
+
+    ```bash
+    wsl --install
+    ```
+
+    Ubuntu is the OS installed by default. Restart your machine, and in Powershell set WSL 2 as your default by doing the following
+
+    ```bash
+    wsl --set-default-version 2
+    ```
+
 * Install the system level dependencies
+
+    For WSL2:
+
+    ```bash
+    curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+    sudo apt install ca-certificates
+    ```
 
     ```bash
     sudo apt update
-    sudo apt install -y build-essential git autoconf libtool libssl-dev libclang-10-dev clang-10
+    sudo apt install -y build-essential pkg-config ca-certificates git autoconf libtool libssl-dev libclang-10-dev clang-10
     ```
 
     Ensure `clang` exists in your $PATH by executing
@@ -118,9 +143,31 @@ Now we have both repos `phala-blockchain` and `js-sdk` in the working directory.
 # Build the core blockchain
 cd phala-blockchain/
 cargo build --release
+```
 
+For WSL2:
+You might experience troubles with libssl-dev when trying to build the core blockchain.
+if this happens:
+
+```bash
+dpkg -L libssl-dev | grep lib
+dpkg -L libssl-dev | grep include
+export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu/
+export OPENSSL_INCLUDE_DIR=/usr/include/openssl/
+```
+
+and try to build again:
+
+```bash
+# Build the core blockchain
+cargo build --release
+```
+
+Finally you can proceed with pruntime:
+
+```bash
 # Build pRuntime (TEE Enclave)
-cd ./pruntime/
+cd ./standalone/pruntime/
 SGX_MODE=SW make
 ```
 
@@ -128,7 +175,7 @@ The compilation takes from 20 mins to 60 mins depending on your internet connect
 
 - `./target/release/phala-node`: The Substrate node
 - `./target/release/pherry`: The Substrate-to-TEE bridge relayer
-- `./pruntime/bin/app`: The TEE worker
+- `./standalone/pruntime/bin/app`: The TEE worker
 
 > **Notes on `SGX_MODE`**
 >
@@ -141,7 +188,7 @@ The three core blockchain components work together to bring the full functionali
 ./target/release/phala-node --dev --tmp
 
 # In terminal window 2: pruntime
-cd pruntime/bin
+cd standalone/pruntime/bin
 ./app -c 0
 cd ../..
 
